@@ -181,6 +181,174 @@
       ]
     },
     {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input Group",
+      "description": "An input or textarea with attached text, icons, and buttons.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": [
+        "@beskar/utils",
+        "@beskar/theme",
+        "@beskar/button",
+        "@beskar/input",
+        "@beskar/textarea"
+      ],
+      "files": [
+        {
+          "path": "registry/beskar/ui/input-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A modal window for a focused task.",
+      "dependencies": ["@base-ui/react", "@phosphor-icons/react"],
+      "registryDependencies": [
+        "@beskar/utils",
+        "@beskar/theme",
+        "@beskar/button"
+      ],
+      "files": [
+        {
+          "path": "registry/beskar/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "A modal that interrupts to confirm a consequential action.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "@beskar/utils",
+        "@beskar/theme",
+        "@beskar/button"
+      ],
+      "files": [
+        {
+          "path": "registry/beskar/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "A panel that slides in from an edge of the screen.",
+      "dependencies": ["@base-ui/react", "@phosphor-icons/react"],
+      "registryDependencies": [
+        "@beskar/utils",
+        "@beskar/theme",
+        "@beskar/button"
+      ],
+      "files": [
+        {
+          "path": "registry/beskar/ui/sheet.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "A floating panel anchored to its trigger.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/popover.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "A menu of actions, with checkbox items, radio items, and submenus.",
+      "dependencies": ["@base-ui/react", "@phosphor-icons/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Pick one option from a list.",
+      "dependencies": ["@base-ui/react", "@phosphor-icons/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "A text field that filters a list of options, with single or multiple selection.",
+      "dependencies": ["@base-ui/react", "@phosphor-icons/react"],
+      "registryDependencies": [
+        "@beskar/utils",
+        "@beskar/theme",
+        "@beskar/button",
+        "@beskar/input-group"
+      ],
+      "files": [
+        {
+          "path": "registry/beskar/ui/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "A command palette: a searchable list of actions.",
+      "dependencies": ["cmdk", "@phosphor-icons/react"],
+      "registryDependencies": [
+        "@beskar/utils",
+        "@beskar/theme",
+        "@beskar/dialog",
+        "@beskar/input-group"
+      ],
+      "files": [
+        {
+          "path": "registry/beskar/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "title": "Sonner",
+      "description": "Toast notifications that follow the Beskar theme.",
+      "dependencies": ["sonner", "@phosphor-icons/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/sonner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "use-theme-preference",
       "type": "registry:hook",
       "title": "useThemePreference",

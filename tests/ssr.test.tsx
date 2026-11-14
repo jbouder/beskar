@@ -32,24 +32,61 @@ const hookItems = registry.items.filter(
   (item) => item.type === 'registry:hook',
 );
 
-/** Components that render nothing when bare: build a meaningful tree instead. */
-const PROBES: Record<
-  string,
-  (
-    mod: Record<string, React.ComponentType<Record<string, unknown>>>,
-  ) => ReactElement
-> = {
+type Module = Record<string, React.ComponentType<Record<string, unknown>>>;
+
+const h = createElement;
+
+/** A closed overlay: the root, its trigger, and its content. */
+function overlay(root: string, trigger: string, content: string) {
+  return (mod: Module) =>
+    h(
+      mod[root],
+      null,
+      h(mod[trigger], null, 'Open'),
+      h(mod[content], null, 'Content'),
+    );
+}
+
+/**
+ * Components that render nothing when bare, or whose export is not the
+ * PascalCase of the item name: build a meaningful tree instead.
+ */
+const PROBES: Record<string, (mod: Module) => ReactElement> = {
   tooltip: (mod) =>
-    createElement(
+    h(
       mod.TooltipProvider,
       null,
-      createElement(
-        mod.Tooltip,
-        null,
-        createElement(mod.TooltipTrigger, null, 'Trigger'),
-        createElement(mod.TooltipContent, null, 'Content'),
-      ),
+      overlay('Tooltip', 'TooltipTrigger', 'TooltipContent')(mod),
     ),
+  dialog: overlay('Dialog', 'DialogTrigger', 'DialogContent'),
+  'alert-dialog': overlay(
+    'AlertDialog',
+    'AlertDialogTrigger',
+    'AlertDialogContent',
+  ),
+  sheet: overlay('Sheet', 'SheetTrigger', 'SheetContent'),
+  popover: overlay('Popover', 'PopoverTrigger', 'PopoverContent'),
+  'dropdown-menu': overlay(
+    'DropdownMenu',
+    'DropdownMenuTrigger',
+    'DropdownMenuContent',
+  ),
+  select: (mod) =>
+    h(
+      mod.Select,
+      null,
+      h(mod.SelectTrigger, { 'aria-label': 'Pick' }, h(mod.SelectValue)),
+      h(mod.SelectContent, null, h(mod.SelectItem, { value: 'a' }, 'A')),
+    ),
+  combobox: (mod) =>
+    h(
+      mod.Combobox,
+      { items: ['a'] },
+      h(mod.ComboboxInput, { 'aria-label': 'Pick' }),
+      h(mod.ComboboxContent, null, h(mod.ComboboxList)),
+    ),
+  // The toaster renders nothing until a toast exists, so give it a wrapper.
+  sonner: (mod) => h('div', null, h(mod.Toaster)),
 };
 
 /** Convert a kebab-case registry name to the PascalCase export name. */
@@ -81,14 +118,16 @@ describe('SSR safety', () => {
 
     it(`${item.name} (${componentName}) renders to non-empty HTML without useLayoutEffect warnings`, async () => {
       const mod = await import(`@/components/ui/${item.name}.tsx`);
+      const probe = PROBES[item.name];
       const Component = mod[componentName] as React.ComponentType | undefined;
 
-      expect(
-        Component,
-        `@/components/ui/${item.name} does not export "${componentName}"`,
-      ).toBeDefined();
+      if (!probe) {
+        expect(
+          Component,
+          `@/components/ui/${item.name} does not export "${componentName}"`,
+        ).toBeDefined();
+      }
 
-      const probe = PROBES[item.name];
       const html = renderToString(
         // biome-ignore lint/style/noNonNullAssertion: guarded by the toBeDefined assertion above
         probe ? probe(mod) : createElement(Component!),

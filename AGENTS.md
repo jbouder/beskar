@@ -163,7 +163,13 @@ A component is **four coordinated edits**: the component file, a
   form `duration-[--token]` compiles to nothing under v4 and CI rejects it.
   Gate non-essential motion with `motion-safe:`.
 - **Accessible.** Every story runs through axe in a real browser, and any
-  violation fails the test run.
+  violation fails the test run. Add an open-state story for anything that
+  opens (`defaultOpen`), so axe checks the popup and not only the trigger. An
+  icon-only part ships with a default `aria-label` that the caller can
+  override.
+- **Fix stock accessibility bugs here.** When axe fails on unmodified shadcn
+  source, fix the component and leave a comment that says why. Do not disable
+  the rule.
 
 ### `registry.json` entry
 
