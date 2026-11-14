@@ -25,11 +25,17 @@ Do not write a primitive from scratch when shadcn covers it. Fetch the
 mkdir /tmp/stock && cd /tmp/stock
 bun init -y
 cat > components.json <<'JSON'
-{"$schema":"https://ui.shadcn.com/schema.json","style":"base-lyra","rsc":false,"tsx":true,"tailwind":{"config":"","css":"src/index.css","baseColor":"neutral","cssVariables":true,"prefix":""},"iconLibrary":"phosphor","aliases":{"components":"@/components","ui":"@/components/ui","lib":"@/lib","utils":"@/lib/utils","hooks":"@/hooks"}}
+{"$schema":"https://ui.shadcn.com/schema.json","style":"base-lyra","rsc":true,"tsx":true,"tailwind":{"config":"","css":"src/index.css","baseColor":"neutral","cssVariables":true,"prefix":""},"iconLibrary":"phosphor","aliases":{"components":"@/components","ui":"@/components/ui","lib":"@/lib","utils":"@/lib/utils","hooks":"@/hooks"}}
 JSON
 mkdir -p src && touch src/index.css
 bunx shadcn add <name> --yes
 ```
+
+The scratch app must have `"rsc": true` in `components.json`. With `false`, the
+CLI strips `'use client'` from the files it writes, and apps with server
+components then break. `tests/registry.test.ts` pins which components carry
+the directive: add a new one to `CLIENT_COMPONENTS` or `SERVER_SAFE` there,
+matching upstream.
 
 Copy `src/components/ui/<name>.tsx` to `registry/beskar/ui/<name>.tsx`. Copy
 any hook it brought along to `registry/beskar/hooks/`.
