@@ -217,6 +217,39 @@ describe('theme item ↔ globals.css contract', () => {
   });
 });
 
+describe('theme item dependencies', () => {
+  // The CLI copies each `@import` into the app's stylesheet. If the package
+  // behind it is not a dependency of the theme, the app's CSS build fails.
+  it('lists every package that globals.css imports', () => {
+    const css = readFileSync(
+      resolve(import.meta.dirname, '../registry/beskar/globals.css'),
+      'utf8',
+    );
+    const manifest = JSON.parse(
+      readFileSync(resolve(import.meta.dirname, '../registry.json'), 'utf8'),
+    ) as { items: { name: string; dependencies?: string[] }[] };
+    const dependencies =
+      manifest.items.find((item) => item.name === 'theme')?.dependencies ?? [];
+
+    const packages = [...css.matchAll(/^@import "([^"]+)";/gm)]
+      .map((match) => match[1])
+      // The package name is the first segment, or the first two when scoped.
+      .map((specifier) =>
+        specifier
+          .split('/')
+          .slice(0, specifier.startsWith('@') ? 2 : 1)
+          .join('/'),
+      )
+      // Every shadcn app already has Tailwind.
+      .filter((name) => name !== 'tailwindcss');
+
+    expect(packages.length).toBeGreaterThan(0);
+    for (const name of packages) {
+      expect(dependencies, name).toContain(name);
+    }
+  });
+});
+
 describe('shadcn add @beskar/theme', () => {
   const cliTimeout = 120_000;
 

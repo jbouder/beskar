@@ -577,6 +577,7 @@
       "description": "Color, typography, radius, and motion tokens for light and dark.",
       "dependencies": [
         "tw-animate-css",
+        "shadcn",
         "@fontsource-variable/oxanium",
         "@fontsource-variable/jetbrains-mono"
       ],
