@@ -9,3 +9,6 @@ package-lock.json
 
 # Build output: Storybook at the root, registry JSON under r/. Deployed by CI.
 public/
+
+# Wrangler's local state.
+.wrangler/

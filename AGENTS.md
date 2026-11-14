@@ -7,8 +7,9 @@ jbouder's vibe projects (holocron, holotable, datapad, acolyte, pulse).
 
 A [shadcn component registry](https://ui.shadcn.com/docs/registry), **not** a
 published component library. Components ship as **source** that apps copy in
-with `bunx shadcn add @beskar/<name>`. The registry JSON is served from GitHub
-Pages at `https://jbouder.github.io/beskar/r/`, next to the Storybook site.
+with `bunx shadcn add @beskar/<name>`. Storybook and the registry JSON are one
+static Cloudflare Worker: Storybook at `https://beskar.vibeproject.workers.dev/` and the
+registry at `https://beskar.vibeproject.workers.dev/r/`.
 There is no compiled package output. Do not add a library build step and do not
 `npm publish` components.
 
@@ -28,7 +29,7 @@ bun install                 # install deps (CI uses --frozen-lockfile)
 
 bun run storybook           # dev: Storybook on :6006
 bun run build:registry      # build registry items into public/r
-bun run build:pages         # full Pages build (Storybook at /, registry at /r)
+bun run build:pages         # full site build (Storybook at /, registry at /r)
 
 bun run check               # Biome: format + lint + import order
 bun run check:fix           # same, and apply fixes
@@ -54,6 +55,14 @@ The Storybook test project needs Chromium once: `bunx playwright install chromiu
 Storybook's packages (`storybook` and every `@storybook/*`) are pinned to one
 exact version and must move together. Dependabot ignores them, so bump them by
 hand. `tests/tooling.test.ts` fails if they drift apart.
+
+## Deploy
+
+`.github/workflows/deploy.yml` deploys `main` to Cloudflare after CI passes. It
+needs the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` repository
+secrets, and skips the deploy (staying green) without them. Deploy through CI,
+not from a local `wrangler login`. `wrangler.jsonc` has no single-page
+fallback on purpose: an unknown registry item must return 404.
 
 ## Repo structure
 
