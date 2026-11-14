@@ -14,7 +14,7 @@
  *   - A `:root` variable is *semantic* (→ `cssVars.light`) when `@theme inline`
  *     exposes it as a Tailwind color (`--color-X: var(--X)`), or when it is
  *     `--radius`. Everything else in `:root` is a *primitive* (→ `css[":root"]`),
- *     which keeps primitives out of `@theme` — they must not become utilities.
+ *     which keeps primitives out of `@theme`. They must not become utilities.
  *   - Every `.dark` variable → `cssVars.dark`.
  *   - Every `@theme inline` variable that is not a `--color-*` mapping or a
  *     `--radius-*` step → `cssVars.theme` (fonts, motion tokens, `--animate-*`).

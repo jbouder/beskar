@@ -15,7 +15,8 @@
       "!bun.lock",
       "!**/*.tsbuildinfo",
       "!**/*.svg",
-      "!**/*.css"
+      "!**/*.css",
+      "!**/SKILL.md"
     ]
   },
   "formatter": {
