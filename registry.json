@@ -349,6 +349,198 @@
       ]
     },
     {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "A callout for a message that needs attention.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "A user image with a fallback, a status badge, and a stacked group.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "A date picker grid for single dates, multiple dates, and ranges.",
+      "dependencies": ["react-day-picker", "@phosphor-icons/react"],
+      "registryDependencies": [
+        "@beskar/utils",
+        "@beskar/theme",
+        "@beskar/button"
+      ],
+      "files": [
+        {
+          "path": "registry/beskar/ui/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "title": "Empty",
+      "description": "An empty state with media, a title, a description, and actions.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/empty.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "Layout for a form control with its label, description, and error.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": [
+        "@beskar/utils",
+        "@beskar/theme",
+        "@beskar/label",
+        "@beskar/separator"
+      ],
+      "files": [
+        {
+          "path": "registry/beskar/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "A bar that shows how far a task has come.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "A collapsible app sidebar that becomes a sheet on small screens.",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "@phosphor-icons/react"
+      ],
+      "registryDependencies": [
+        "@beskar/utils",
+        "@beskar/theme",
+        "@beskar/button",
+        "@beskar/input",
+        "@beskar/separator",
+        "@beskar/sheet",
+        "@beskar/skeleton",
+        "@beskar/tooltip",
+        "@beskar/use-mobile"
+      ],
+      "files": [
+        {
+          "path": "registry/beskar/ui/sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "A loading indicator.",
+      "dependencies": ["@phosphor-icons/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A responsive data table.",
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "A button that switches between on and off.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "description": "A set of toggles where one or several can be on.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "@beskar/utils",
+        "@beskar/theme",
+        "@beskar/toggle"
+      ],
+      "files": [
+        {
+          "path": "registry/beskar/ui/toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "use-mobile",
+      "type": "registry:hook",
+      "title": "useIsMobile",
+      "description": "Reports whether the viewport is narrower than the md breakpoint.",
+      "files": [
+        {
+          "path": "registry/beskar/hooks/use-mobile.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
       "name": "use-theme-preference",
       "type": "registry:hook",
       "title": "useThemePreference",
