@@ -1,9 +1,8 @@
 import type { Preview } from '@storybook/react-vite';
 import { addons } from 'storybook/preview-api';
-// Webfonts behind the `--font-sans` / `--font-mono` tokens.
-import '@fontsource-variable/oxanium';
-import '@fontsource-variable/jetbrains-mono';
+// Tokens, fonts, and base styles. The same file the `theme` item ships.
 import '../registry/beskar/globals.css';
+import './preview.css';
 import { syncPreviewTheme } from './theme';
 
 syncPreviewTheme(addons.getChannel());

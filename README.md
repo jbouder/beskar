@@ -11,7 +11,7 @@ Beskar is a [shadcn registry](https://ui.shadcn.com/docs/registry). Components s
 
 ## Status
 
-Under construction. The scaffold is in place. The theme and components land next.
+Under construction. The theme and the Style Guide are in place. Components land next.
 
 ## Develop
 
@@ -19,6 +19,7 @@ Under construction. The scaffold is in place. The theme and components land next
 bun install
 bun run storybook        # Storybook on :6006
 bun run build:registry   # registry JSON into public/r
+bun run sync:theme       # after editing registry/beskar/globals.css
 ```
 
 Before calling a change done:

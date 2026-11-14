@@ -88,6 +88,39 @@ Always import registry siblings as `@/components/ui/<name>`, never `@/ui/<name>`
 emits for a consumer with default aliases, so an installed file is
 byte-identical to its registry source and a plain `diff` detects drift.
 
+## Theme
+
+`registry/beskar/globals.css` is the single source of truth for tokens. The
+installable `theme` item in `registry.json` is **derived** from it. Never edit
+the item's `css` or `cssVars` by hand.
+
+```sh
+bun run sync:theme    # after any edit to globals.css
+```
+
+`tests/theme.test.ts` fails when the two drift. It also runs the real `shadcn`
+CLI against a throwaway app to prove that installing the theme reproduces
+`globals.css` and that installing it twice changes nothing.
+
+Rules for `globals.css`:
+
+- Exactly one `:root`, one `.dark`, and one `@theme inline` block. The CLI
+  merges into the first match of each.
+- A color token needs three lines: the value in `:root`, the value in `.dark`,
+  and `--color-<name>: var(--<name>)` in `@theme inline`. That mapping is what
+  makes it a Tailwind color.
+- Non-color tokens (durations, easings) live in `:root` only.
+- Write a multi-part selector on one line inside `@layer` and `@media` blocks.
+  The CLI matches selectors as written, so a wrapped one is duplicated on
+  reinstall.
+- Every text-on-surface pairing must hold 4.5:1 in both themes. Add new
+  pairings to `tests/contrast.test.ts`.
+- Status colors are `ok`, `warn`, and `destructive`. Categorical colors are the
+  six `tone-*` inks, each paired with its `tone-*-soft` fill.
+
+The Style Guide stories (`stories/Colors`, `Typography`, `Icons`, `Motion`)
+read token values live. Add a new token to the matching story.
+
 ## Authoring a component
 
 A component is **four coordinated edits**: the component file, a
