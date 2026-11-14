@@ -6,11 +6,14 @@
  * "useLayoutEffect does nothing on the server" warning.
  *
  * Runs in the `ssr` Vitest project (Node, no jsdom) so the test surface matches
- * what a real SSR renderer sees. `registry:hook` items need a render probe
- * each. Add those here when the first hook lands.
+ * what a real SSR renderer sees.
+ *
+ * A component is rendered bare by default. One that renders nothing without
+ * children gets an entry in `PROBES`. Every `registry:hook` file is imported,
+ * and each hook has an explicit render probe at the bottom.
  */
 import { readFileSync } from 'node:fs';
-import { createElement } from 'react';
+import { createElement, type ReactElement } from 'react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -25,6 +28,29 @@ const registry = JSON.parse(
 ) as { items: RegistryItem[] };
 
 const uiItems = registry.items.filter((item) => item.type === 'registry:ui');
+const hookItems = registry.items.filter(
+  (item) => item.type === 'registry:hook',
+);
+
+/** Components that render nothing when bare: build a meaningful tree instead. */
+const PROBES: Record<
+  string,
+  (
+    mod: Record<string, React.ComponentType<Record<string, unknown>>>,
+  ) => ReactElement
+> = {
+  tooltip: (mod) =>
+    createElement(
+      mod.TooltipProvider,
+      null,
+      createElement(
+        mod.Tooltip,
+        null,
+        createElement(mod.TooltipTrigger, null, 'Trigger'),
+        createElement(mod.TooltipContent, null, 'Content'),
+      ),
+    ),
+};
 
 /** Convert a kebab-case registry name to the PascalCase export name. */
 function toPascalCase(name: string): string {
@@ -62,8 +88,11 @@ describe('SSR safety', () => {
         `@/components/ui/${item.name} does not export "${componentName}"`,
       ).toBeDefined();
 
-      // biome-ignore lint/style/noNonNullAssertion: guarded by the toBeDefined assertion above
-      const html = renderToString(createElement(Component!));
+      const probe = PROBES[item.name];
+      const html = renderToString(
+        // biome-ignore lint/style/noNonNullAssertion: guarded by the toBeDefined assertion above
+        probe ? probe(mod) : createElement(Component!),
+      );
 
       expect(
         html.trim(),
@@ -84,4 +113,43 @@ describe('SSR safety', () => {
       ).toBe(false);
     });
   }
+});
+
+describe('SSR safety: hooks', () => {
+  // Import-time safety: a hook file that touches `window`, `document`, or
+  // `localStorage` at module scope throws here, because Node has none.
+  for (const item of hookItems) {
+    for (const file of item.files) {
+      const importPath = file.path.replace(/^registry\/beskar/, '@');
+
+      it(`${file.path} imports on the server`, async () => {
+        await expect(import(importPath)).resolves.toBeDefined();
+      });
+    }
+  }
+
+  it('useThemePreference renders on the server with system defaults', async () => {
+    const { useThemePreference } = await import('@/hooks/use-theme-preference');
+
+    function Probe() {
+      const { themeMode, isDarkMode } = useThemePreference();
+      return createElement('div', null, `${themeMode}:${isDarkMode}`);
+    }
+
+    // Without a window there is no stored preference and no OS signal.
+    expect(renderToString(createElement(Probe))).toContain('system:false');
+  });
+
+  it('ThemeProvider and useTheme render on the server', async () => {
+    const { ThemeProvider, useTheme } = await import('@/hooks/theme-provider');
+
+    function Probe() {
+      const { themeMode, isDarkMode } = useTheme();
+      return createElement('div', null, `${themeMode}:${isDarkMode}`);
+    }
+
+    expect(
+      renderToString(createElement(ThemeProvider, null, createElement(Probe))),
+    ).toContain('system:false');
+  });
 });

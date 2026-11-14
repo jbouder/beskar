@@ -127,7 +127,11 @@ A component is **four coordinated edits**: the component file, a
 `registry.json` entry, a story, and a test.
 
 - **Start from shadcn.** Take the `base-lyra` source for the component and
-  adapt it. Do not write a primitive from scratch when shadcn covers it.
+  adapt it. Do not write a primitive from scratch when shadcn covers it. Keep
+  the diff from stock small: swap the `cn` import, add the motion tokens to
+  every `transition-*`, add the data attributes, and stop.
+- **Links.** `Button` keeps button semantics even through `render`. For a
+  navigation link that looks like a button, put `buttonVariants()` on an `<a>`.
 - **Location and naming.** Component at `registry/beskar/ui/<name>.tsx`. Story
   at `stories/<name>.stories.tsx` (CSF3). Test at `tests/<name>.test.tsx`.
 - **Variants through `cva`.** Export the `*Variants` function next to the
@@ -140,7 +144,10 @@ A component is **four coordinated edits**: the component file, a
 - **Function components, named exports, no `forwardRef`.** React 19 passes
   `ref` as a normal prop.
 - **SSR-safe.** `tests/ssr.test.tsx` renders every `registry:ui` item in Node
-  with no DOM. The PascalCase of the item name must be a named export.
+  with no DOM. The PascalCase of the item name must be a named export. A
+  component that renders nothing when bare (a tooltip, a dialog) gets a probe
+  in that file's `PROBES` map. A new `registry:hook` gets a render probe there
+  too.
 - **Tokens only.** No hard-coded colors, fonts, radii, or durations. Use the
   semantic tokens from `globals.css`.
 - **Motion.** Use `duration-(--token)` and `ease-(--token)`. The Tailwind v3
