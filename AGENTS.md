@@ -51,6 +51,10 @@ bun run test
 Let `bun run check:fix` own formatting and import order. Do not hand-format.
 The Storybook test project needs Chromium once: `bunx playwright install chromium`.
 
+Storybook's packages (`storybook` and every `@storybook/*`) are pinned to one
+exact version and must move together. Dependabot ignores them, so bump them by
+hand. `tests/tooling.test.ts` fails if they drift apart.
+
 ## Repo structure
 
 ```
