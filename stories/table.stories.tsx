@@ -24,7 +24,7 @@ const meta = {
   parameters: { layout: 'centered' },
   decorators: [
     (Story) => (
-      <div className="w-[32rem] max-w-full">
+      <div className="w-[32rem] max-w-[calc(100vw-2rem)]">
         <Story />
       </div>
     ),
