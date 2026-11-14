@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.DS_Store
+
+# This is a Bun project. bun.lock is the only lockfile.
+package-lock.json
+
+# Build output: Storybook at the root, registry JSON under r/. Deployed by CI.
+public/
