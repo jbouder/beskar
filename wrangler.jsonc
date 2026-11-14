@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "beskar",
+  "compatibility_date": "2026-10-01",
+  // Static assets only: no script. `bun run build:pages` writes Storybook to
+  // public/ and the registry JSON to public/r/. There is no single-page
+  // fallback on purpose: a registry item that does not exist must return 404
+  // so `shadcn add` fails loudly instead of parsing index.html.
+  "assets": {
+    "directory": "./public"
+  },
+  "observability": { "enabled": true }
+}

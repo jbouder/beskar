@@ -13,6 +13,26 @@ Beskar is a [shadcn registry](https://ui.shadcn.com/docs/registry). Components s
 
 Under construction. The theme, the Style Guide, and the first twelve components are in place. Overlays and menus land next.
 
+## Use it
+
+Storybook: <https://beskar.vibeproject.workers.dev>
+
+Add the registry to your app's `components.json`:
+
+```json
+{
+  "registries": {
+    "@beskar": "https://beskar.vibeproject.workers.dev/r/{name}.json"
+  }
+}
+```
+
+Then add items by name:
+
+```sh
+bunx shadcn add @beskar/button
+```
+
 ## Develop
 
 ```sh
@@ -29,6 +49,17 @@ bun run build:registry && bun run check && bunx tsc --noEmit && bun run test
 ```
 
 See [AGENTS.md](./AGENTS.md) for the repo layout and rules.
+
+## Deploy
+
+Merges to `main` deploy to Cloudflare Workers after CI passes. Storybook is at the root and the registry JSON is under `/r`.
+
+The deploy needs two repository secrets:
+
+- `CLOUDFLARE_API_TOKEN`: a token with the "Edit Cloudflare Workers" template
+- `CLOUDFLARE_ACCOUNT_ID`
+
+Without them the deploy job is skipped and the run stays green.
 
 ## License
 

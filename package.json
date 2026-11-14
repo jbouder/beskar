@@ -23,7 +23,8 @@
     "test:storybook": "vitest run --project=storybook",
     "build:storybook": "storybook build -o public",
     "build:pages": "bun run build:storybook && bun run build:registry",
-    "sync:theme": "bun run scripts/sync-theme.ts && biome format --write registry.json"
+    "sync:theme": "bun run scripts/sync-theme.ts && biome format --write registry.json",
+    "deploy": "bun run build:pages && wrangler deploy"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
@@ -62,6 +63,7 @@
     "tailwindcss": "^4.1.13",
     "typescript": "^6.0.3",
     "vite": "^8.0.16",
-    "vitest": "5.1.0"
+    "vitest": "5.1.0",
+    "wrangler": "4.162.0"
   }
 }
