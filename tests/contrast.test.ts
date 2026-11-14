@@ -15,13 +15,29 @@ const { light, dark } = deriveThemeItem(
   ),
 ).cssVars;
 
-/** Relative luminance of an opaque `oklch(L C H)` color. */
-function luminance(value: string): number {
+type Lab = [L: number, a: number, b: number];
+
+/** An opaque `oklch(L C H)` color as OKLab. */
+function toLab(value: string): Lab {
   const match = value.match(/^oklch\(([\d.]+) ([\d.]+) ([\d.]+)\)$/);
   if (!match) throw new Error(`Not an opaque oklch() color: ${value}`);
   const [L, C, H] = match.slice(1).map(Number);
-  const a = C * Math.cos((H * Math.PI) / 180);
-  const b = C * Math.sin((H * Math.PI) / 180);
+  return [
+    L,
+    C * Math.cos((H * Math.PI) / 180),
+    C * Math.sin((H * Math.PI) / 180),
+  ];
+}
+
+/** `color` at `alpha` over `surface`, as Tailwind's `bg-x/10` draws it (mixed in OKLab). */
+function tint(color: string, alpha: number, surface: string): Lab {
+  const [c, s] = [toLab(color), toLab(surface)];
+  return [0, 1, 2].map((i) => c[i] * alpha + s[i] * (1 - alpha)) as Lab;
+}
+
+/** Relative luminance of an OKLab color. */
+function luminance(color: string | Lab): number {
+  const [L, a, b] = typeof color === 'string' ? toLab(color) : color;
 
   // OKLab to linear sRGB (Björn Ottosson's reference matrices).
   const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
@@ -35,7 +51,7 @@ function luminance(value: string): number {
   return 0.2126 * r + 0.7152 * g + 0.0722 * bl;
 }
 
-function contrast(foreground: string, background: string): number {
+function contrast(foreground: string | Lab, background: string | Lab): number {
   const [hi, lo] = [luminance(foreground), luminance(background)].sort(
     (x, y) => y - x,
   );
@@ -79,6 +95,20 @@ describe.each([
   it.each(TEXT_PAIRS)('%s on %s is at least 4.5:1', (text, surface) => {
     expect(contrast(tokens[text], tokens[surface])).toBeGreaterThanOrEqual(4.5);
   });
+
+  // The destructive button and badge draw destructive text on a destructive
+  // tint: 10% at rest and 20% on hover in light, 20% and 30% in dark.
+  it.each(_name === 'light' ? [0.1, 0.2] : [0.2, 0.3])(
+    'destructive on its own %f tint is at least 4.5:1',
+    (alpha) => {
+      expect(
+        contrast(
+          tokens.destructive,
+          tint(tokens.destructive, alpha, tokens.background),
+        ),
+      ).toBeGreaterThanOrEqual(4.5);
+    },
+  );
 
   it('the focus ring is at least 3:1 on background and card', () => {
     expect(contrast(tokens.ring, tokens.background)).toBeGreaterThanOrEqual(3);

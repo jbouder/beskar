@@ -17,6 +17,187 @@
       ]
     },
     {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "An action trigger with six variants and eight sizes.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "A small label for status, counts, and categories.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "A surface that groups related content, with header, content, and footer parts.",
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "A single-line text field.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "A text label for a form control.",
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/label.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "A multi-line text field that grows with its content.",
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "A horizontal or vertical divider.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "A loading placeholder that pulses when motion is allowed.",
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "A two-state check control.",
+      "dependencies": ["@base-ui/react", "@phosphor-icons/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "An on and off toggle for settings that apply at once.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Switch between panels of related content.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A short hint shown on hover and keyboard focus.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["@beskar/utils", "@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "use-theme-preference",
+      "type": "registry:hook",
+      "title": "useThemePreference",
+      "description": "Light, dark, and system theme state that persists and toggles the .dark class. Ships ThemeProvider and useTheme.",
+      "registryDependencies": ["@beskar/theme"],
+      "files": [
+        {
+          "path": "registry/beskar/hooks/use-theme-preference.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "registry/beskar/hooks/theme-provider.tsx",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
       "name": "theme",
       "type": "registry:theme",
       "title": "Beskar theme",
@@ -85,7 +266,7 @@
           "muted-foreground": "oklch(0.53 0 0)",
           "accent": "oklch(0.97 0 0)",
           "accent-foreground": "oklch(0.205 0 0)",
-          "destructive": "oklch(0.577 0.245 27.325)",
+          "destructive": "oklch(0.5 0.2 27)",
           "border": "oklch(0.922 0 0)",
           "input": "oklch(0.65 0 0)",
           "ring": "oklch(0.27 0 0)",

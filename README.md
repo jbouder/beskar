@@ -11,7 +11,7 @@ Beskar is a [shadcn registry](https://ui.shadcn.com/docs/registry). Components s
 
 ## Status
 
-Under construction. The theme and the Style Guide are in place. Components land next.
+Under construction. The theme, the Style Guide, and the first twelve components are in place. Overlays and menus land next.
 
 ## Develop
 

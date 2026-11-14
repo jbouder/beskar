@@ -15,8 +15,14 @@ source file you copy into your own app with the `shadcn` CLI. You own the code.
 
 ## Status
 
-The theme and the **Style Guide** are in place: colors, typography, icons, and
-motion. Components land in the next phases.
+In place so far:
+
+- The theme and the **Style Guide**: colors, typography, icons, and motion.
+- Twelve **Components**: button, badge, card, input, label, textarea,
+  separator, skeleton, checkbox, switch, tabs, and tooltip.
+- The **Hooks** for light, dark, and system theme preference.
+
+Overlays and menus land next.
 
 ## Installing
 
@@ -34,11 +40,12 @@ Then add items by name:
 
 ```sh
 bunx shadcn add @beskar/theme
-bunx shadcn add @beskar/utils
+bunx shadcn add @beskar/button
 ```
 
 `@beskar/theme` writes the tokens into your stylesheet and installs the fonts.
-It is safe to run again after an update.
+It is safe to run again after an update. Every component pulls in the theme
+and `utils` on its own, so adding a component is enough.
 
 The registry is not deployed yet, so this does not work until the first
 release.
