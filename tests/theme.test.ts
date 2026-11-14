@@ -4,9 +4,9 @@
  * against a stylesheet that already carries the theme (nebari-design#151).
  *
  * The CLI tests run the real `shadcn` binary (the pinned devDependency) against
- * a throwaway consumer project, because the merge behaviour under test — where
+ * a throwaway consumer project, because the merge behavior under test, where
  * keyframes land, which `:root` gets appended to, which radius steps get added,
- * when existing values are overwritten — lives in the CLI, not in this repo.
+ * when existing values are overwritten, lives in the CLI, not in this repo.
  */
 import { execFileSync } from 'node:child_process';
 import {

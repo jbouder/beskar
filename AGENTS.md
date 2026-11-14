@@ -82,9 +82,6 @@ registry.json          # registry manifest: one item per component, lib, hook, t
 components.json        # shadcn config (style base-lyra, phosphor icons, aliases)
 ```
 
-Some of these folders do not exist yet. They arrive with the phase that needs
-them.
-
 ### Path alias
 
 `@/*` resolves to `registry/beskar/*`, and the more specific `@/components/ui/*`
@@ -133,7 +130,8 @@ read token values live. Add a new token to the matching story.
 ## Authoring a component
 
 A component is **four coordinated edits**: the component file, a
-`registry.json` entry, a story, and a test.
+`registry.json` entry, a story, and a test. The step-by-step recipe is in
+`.claude/skills/beskar-component/SKILL.md`. The rules are here.
 
 - **Start from shadcn.** Take the `base-lyra` source for the component and
   adapt it. Do not write a primitive from scratch when shadcn covers it. Keep
@@ -180,6 +178,20 @@ A component is **four coordinated edits**: the component file, a
 - **Reference in-repo items as `@beskar/<name>`, never by bare name.** The
   shadcn CLI resolves a bare name against the default registry, which 404s and
   aborts `shadcn add` for consumers. `tests/registry.test.ts` enforces this.
+
+## Two skills, two audiences
+
+- `registry/beskar/skills/beskar-ui` is the **consumer** skill. It ships as
+  the `claude-skill` registry item and teaches an assistant in an app how to
+  install and use Beskar: setup, the catalog, composition, theming, motion.
+- `.claude/skills/beskar-component` is the **contributor** skill. It is the
+  step-by-step recipe for adding a component to this repo.
+
+Update the matching skill in the same change whenever you add an item, rename
+an export, or change a convention. `tests/skills.test.ts` fails when the
+consumer catalog misses a registry item or a component export, and when
+either skill points at a file or script that is gone. Biome does not format
+`SKILL.md` files, because its Markdown formatter breaks their frontmatter.
 
 ## Writing style
 

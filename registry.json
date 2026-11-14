@@ -558,6 +558,19 @@
       ]
     },
     {
+      "name": "claude-skill",
+      "type": "registry:file",
+      "title": "Beskar UI skill for Claude Code",
+      "description": "A Claude Code skill that teaches an AI assistant how to install and use Beskar in an app: registry setup, the component catalog, the Base UI render prop, theming, and motion.",
+      "files": [
+        {
+          "path": "registry/beskar/skills/beskar-ui/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/beskar-ui/SKILL.md"
+        }
+      ]
+    },
+    {
       "name": "theme",
       "type": "registry:theme",
       "title": "Beskar theme",

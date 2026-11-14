@@ -15,7 +15,7 @@ source file you copy into your own app with the `shadcn` CLI. You own the code.
 
 ## Status
 
-In place so far:
+What is in it:
 
 - The theme and the **Style Guide**: colors, typography, icons, and motion.
 - 33 **Components**: the form basics (button, input, checkbox, switch, field,
@@ -23,8 +23,7 @@ In place so far:
   select, combobox, command, and toasts), and the app pieces (sidebar, table,
   calendar, avatar, alert, progress, empty state, and toggles).
 - The **Hooks** for theme preference and for the mobile breakpoint.
-
-The AI skills are next.
+- A **Claude Code skill** that teaches an assistant to use all of the above.
 
 ## Installing
 
@@ -48,3 +47,15 @@ bunx shadcn add @beskar/button
 `@beskar/theme` writes the tokens into your stylesheet and installs the fonts.
 It is safe to run again after an update. Every component pulls in the theme
 and `utils` on its own, so adding a component is enough.
+
+### Claude Code skill
+
+If you build the app with Claude Code, install the Beskar skill too:
+
+```sh
+bunx shadcn add @beskar/claude-skill
+```
+
+It lands at `.claude/skills/beskar-ui/SKILL.md` in your app. It covers setup,
+the component catalog, composition, theming, motion, and the accessibility
+rules. Run the command again to update it.

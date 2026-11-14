@@ -9,9 +9,12 @@ Beskar is a [shadcn registry](https://ui.shadcn.com/docs/registry). Components s
 - Icons: Phosphor
 - Corners: square
 
-## Status
+## What is in it
 
-Under construction. The theme, the Style Guide, and all 33 components are in place. The AI skills are next.
+- **Theme:** neutral light and dark palettes, status and tone colors, fonts, and motion tokens.
+- **33 components:** form basics, overlays and menus, and app pieces like sidebar, table, and calendar.
+- **Hooks:** theme preference (light, dark, system) and the mobile breakpoint.
+- **Skills:** one that teaches Claude Code to use Beskar in an app, and one for contributing here.
 
 ## Use it
 
@@ -27,11 +30,24 @@ Add the registry to your app's `components.json`:
 }
 ```
 
-Then add items by name:
+Install the theme once, then add items by name:
 
 ```sh
-bunx shadcn add @beskar/button
+bunx shadcn add @beskar/theme
+bunx shadcn add @beskar/button @beskar/dialog
 ```
+
+Each component pulls in the theme, `utils`, and the components it builds on.
+
+### Claude Code skill
+
+If you build the app with [Claude Code](https://docs.claude.com/en/docs/claude-code/skills), install the Beskar skill:
+
+```sh
+bunx shadcn add @beskar/claude-skill
+```
+
+It lands at `.claude/skills/beskar-ui/SKILL.md` in the app. It covers setup, the component catalog, composition, theming, motion, and the accessibility rules. Run the command again to update it.
 
 ## Develop
 
@@ -48,7 +64,7 @@ Before calling a change done:
 bun run build:registry && bun run check && bunx tsc --noEmit && bun run test
 ```
 
-See [AGENTS.md](./AGENTS.md) for the repo layout and rules.
+See [AGENTS.md](./AGENTS.md) for the repo layout and rules. To add a component, follow the recipe in [.claude/skills/beskar-component](./.claude/skills/beskar-component/SKILL.md). Claude Code loads it in this repo as `/beskar-component`.
 
 ## Deploy
 
