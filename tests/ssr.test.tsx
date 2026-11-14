@@ -52,6 +52,18 @@ function overlay(root: string, trigger: string, content: string) {
  * PascalCase of the item name: build a meaningful tree instead.
  */
 const PROBES: Record<string, (mod: Module) => ReactElement> = {
+  sidebar: (mod) =>
+    h(
+      mod.SidebarProvider,
+      null,
+      h(
+        mod.Sidebar,
+        null,
+        h(mod.SidebarContent, null, h(mod.SidebarMenuSkeleton)),
+      ),
+      h(mod.SidebarInset, null, h(mod.SidebarTrigger)),
+    ),
+  progress: (mod) => h(mod.Progress, { value: 40, 'aria-label': 'Progress' }),
   tooltip: (mod) =>
     h(
       mod.TooltipProvider,
@@ -177,6 +189,16 @@ describe('SSR safety: hooks', () => {
 
     // Without a window there is no stored preference and no OS signal.
     expect(renderToString(createElement(Probe))).toContain('system:false');
+  });
+
+  it('useIsMobile renders on the server as not mobile', async () => {
+    const { useIsMobile } = await import('@/hooks/use-mobile');
+
+    function Probe() {
+      return createElement('div', null, `mobile:${useIsMobile()}`);
+    }
+
+    expect(renderToString(createElement(Probe))).toContain('mobile:false');
   });
 
   it('ThemeProvider and useTheme render on the server', async () => {
