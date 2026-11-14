@@ -1,0 +1,14 @@
+/*
+ * Beskar theme: the source of truth for tokens.
+ * Scaffold only. Color, typography, radius, and motion tokens land in phase 2.
+ */
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Oxanium Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-sans);
+  --font-mono:
+    "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
+}

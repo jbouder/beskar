@@ -1,0 +1,40 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# Beskar
+
+**Beskar** is the design system for my vibe projects. It is a
+[shadcn](https://ui.shadcn.com/) component registry: every component is a small
+source file you copy into your own app with the `shadcn` CLI. You own the code.
+
+- **Style:** shadcn `base-lyra` on [Base UI](https://base-ui.com)
+- **Fonts:** Oxanium for UI and headings, JetBrains Mono for code
+- **Icons:** Phosphor
+- **Corners:** square
+
+## Status
+
+The scaffold is in place. The theme, the Style Guide, and the components land
+in the next phases.
+
+## Installing
+
+Add the registry to your app's `components.json`:
+
+```json
+{
+  "registries": {
+    "@beskar": "https://jbouder.github.io/beskar/r/{name}.json"
+  }
+}
+```
+
+Then add items by name:
+
+```sh
+bunx shadcn add @beskar/utils
+```
+
+The registry is not deployed yet, so this does not work until the first
+release.

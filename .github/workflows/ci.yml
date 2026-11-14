@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Cancel superseded runs on the same ref, but never an in-progress main run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Guard against Tailwind v3 motion-token syntax
+        # `duration-[--token]` / `ease-[--token]` compiles to an invalid value
+        # under Tailwind v4, so the transition silently does nothing. Nothing
+        # else in this pipeline catches it.
+        run: |
+          if git grep -nE '(duration|ease)-\[--' -- '*.tsx' '*.ts' '*.css'; then
+            echo "::error::Tailwind v3 motion-token syntax found. Use duration-(--token) / ease-(--token) instead."
+            exit 1
+          fi
+
+      - name: Biome (format + lint + imports)
+        run: bun run ci
+
+      - name: Type check
+        run: bunx tsc --noEmit
+
+      - name: Install Playwright (Chromium) for Storybook browser tests
+        run: bunx playwright install --with-deps chromium
+
+      - name: Test (unit + SSR + Storybook a11y, with coverage)
+        run: bun run test:coverage
+
+      - name: Build pages (Storybook at /, registry JSON at /r)
+        run: bun run build:pages
