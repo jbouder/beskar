@@ -606,7 +606,7 @@
             "color-scheme": "dark"
           },
           "body": {
-            "@apply bg-background text-foreground": {}
+            "@apply bg-background text-foreground antialiased": {}
           }
         },
         "@media (prefers-reduced-motion: reduce)": {
